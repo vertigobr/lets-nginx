@@ -13,7 +13,7 @@ Based on [smashwilson/lets-nginx](https://github.com/smashwilson/lets-nginx). Yo
 
 If you want to build this image yourself you can set the variables BASEREPO and EPELREPO before running `build.sh` in order to choose a specific "yum mirror" from your local network. Running local builds becomes a lot faster with a mirror around.
 
-This is explained a [bit more here](../docker-base/BUILDARGS.md).
+This is explained a [bit more here](https://github.com/vertigobr/docker-base/blob/master/BUILDARGS.md).
 
 # Instructions
 
