@@ -236,4 +236,43 @@ You can make `vertigo/lets-nginx` require the the HTTPS client to send client ce
 
 * Mount a file with the CA public key at "/etc/certs/ca.pem".
 
+Let's say you do have all the certificate files at hand:
 
+* ca.pem : client certificate's CA
+* cert.pem : client certificate public key
+* key.pem : client certificate private key
+
+Running `lets-nginx` with a ca certificate is easy, there is a sample in `runcalets.sh`:
+
+```bash
+SSLCLIENTCA=`cat /tmp/ca.pem`
+echo "SSLCLIENTCA:"
+echo "$SSLCLIENTCA"
+docker run --detach \
+  --name lets-nginx \
+  --link web-backend:backend \
+  --env EMAIL=me@email.com \
+  --env DOMAIN=yourhost.thedomain.youchose \
+  --env UPSTREAM=backend:80 \
+  --env "SSLCLIENTCA=$SSLCLIENTCA" \
+  --publish 80:80 \
+  --publish 443:443 \
+  --volume letsencrypt:/etc/letsencrypt \
+  --volume letsencrypt-backups:/var/lib/letsencrypt \
+  --volume dhparam-cache:/cache \
+  vertigo/lets-nginx
+```
+
+The browser will not work this time (unless it has the client certificate installed), but all-mighty "curl" can do the testing for us. Just CURLing the URL below will fail for the lack of the client certificate:
+
+```bash
+curl https://yourhost.thedomain.youchose
+```
+
+You need to use the client certificate to make it work:
+
+```bash
+curl --cert /tmp/cert.pem --key /tmp/key.pem https://yourhost.thedomain.youchose
+```
+
+*(please do not keep such things in "/tmp", this is just a sample)*
