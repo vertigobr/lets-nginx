@@ -23,7 +23,6 @@ ADD src/templates /templates
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
     chmod +x /entrypoint.sh && \
-    usermod -a -G 999 nginx && \
     mkdir -p /etc/letsencrypt/webrootauth
 
 

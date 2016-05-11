@@ -1,7 +1,7 @@
 # Let's Nginx
 
 [![Build Status](http://drone.vertigo.com.br/api/badges/vertigobr/lets-nginx/status.svg)](http://drone.vertigo.com.br/vertigobr/lets-nginx)
-[![](https://badge.imagelayers.io/vertigo/lets-nginx:latest.svg)](https://imagelayers.io/?images=vertigo/lets-nginx:latest 'Get your own badge on imagelayers.io')
+[![](https://imagelayers.io/badge/vertigo/lets-nginx:latest.svg)](https://imagelayers.io/?images=vertigo/lets-nginx:latest 'Get your own badge on imagelayers.io')
 
 *[dockerhub build](https://hub.docker.com/r/vertigo/lets-nginx/)*
 
