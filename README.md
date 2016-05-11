@@ -17,7 +17,7 @@ This is explained a [bit more here](../docker-base/BUILDARGS.md).
 
 # Instructions
 
-*Most content below is a copy of the original instructions from "smashwilson/lets-nginx".*
+*Most content below is a copy of the original instructions from "smashwilson/lets-nginx". That was a marvelous piece of work.*
 
 Put browser-valid TLS termination in front of any Dockerized HTTP service with one command.
 
