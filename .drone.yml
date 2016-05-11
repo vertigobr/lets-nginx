@@ -1,0 +1,5 @@
+deploy:
+  git_push:
+    branch: master
+    remote: git@github.com:vertigobr/lets-nginx.git
+    force: false
