@@ -14,7 +14,10 @@ MISSING=""
 SSLCLIENT=""
 SSLVERIFY=""
 SSLCLIENTCA=${SSLCLIENTCA:-""}
-if [ -n "${SSLCLIENTCA}" ]; then
+if [ -f /etc/certs/ca.pem ]; then
+    SSLCLIENT="ssl_client_certificate \/etc\/certs\/ca\.pem;"
+    SSLVERIFY="ssl_verify_client on;"
+elif [ -n "${SSLCLIENTCA}" ]; then
     mkdir -p /etc/certs
     echo "${SSLCLIENTCA}" > /etc/certs/ca.pem
     SSLCLIENT="ssl_client_certificate \/etc\/certs\/ca\.pem;"

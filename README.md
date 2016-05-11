@@ -39,7 +39,7 @@ Issues certificates from [letsencrypt](https://letsencrypt.org/), installs them 
 Before you begin, you'll need:
 
  1. A [place to run Docker containers](https://getcarina.com/) **with a public IP**. You can read a [quick intro to Carina here](CARINA.md);
- 2. A domain name with an *A record* pointing to your cluster. You can get one for free on [no-ip.com](www.no-ip.com), there are loads of options available but don't get too picky;
+ 2. A domain name with an *A record* pointing to your cluster. If you own a domain this is easy, just do it. If you don't, you can get one for free on [no-ip.com](www.no-ip.com), there are loads of options available but don't get too picky;
  3. The backend container, i.e. the very service you want to expose with nginx/letsencrypt.
 
 Please understand that letsencrypt requires a public IP to work. Don't be a whiny millenial about it.
@@ -176,7 +176,38 @@ docker volume create --name letsencrypt-backups
 docker volume create --name dhparam-cache
 ```
 
+Finally, run `lets-nginx` for real (no staging, as in `runlets.sh`):
 
+```bash
+docker run --detach \
+  --name lets-nginx \
+  --link web-backend:backend \
+  --env EMAIL=me@email.com \
+  --env DOMAIN=yourhost.thedomain.youchose \
+  --env UPSTREAM=backend:80 \
+  --publish 80:80 \
+  --publish 443:443 \
+  --volume letsencrypt:/etc/letsencrypt \
+  --volume letsencrypt-backups:/var/lib/letsencrypt \
+  --volume dhparam-cache:/cache \
+  vertigo/lets-nginx
+```
+
+Certificate generation from letsencrypt takes some time. You can follow the logs:
+
+```bash
+docker logs -f lets-nginx
+```
+
+As long as you do not erase the volumes, start time will never be slow afterwards.
+
+You can now open your browser at the same URL, as below:
+
+    https://yourhost.thedomain.youchose
+
+This time we have a valid certificate and browser will not complain.
+
+We're done and good to go!
 
 ## Adjusting Nginx configuration
 
@@ -202,5 +233,7 @@ Or, even simpler, you can mount a specific file over "/templates/nginx.conf" or 
 You can make `vertigo/lets-nginx` require the the HTTPS client to send client certificates for an extra level of security. There are two ways to do it:
 
 * Use an environment variable SSLCLIENTCA containing the CA public key to verify the client certificate.
+
+* Mount a file with the CA public key at "/etc/certs/ca.pem".
 
 

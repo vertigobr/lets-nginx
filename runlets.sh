@@ -5,7 +5,7 @@ docker run --detach \
     --name lets-nginx \
     --link web-backend:backend \
     --env EMAIL=andre@vertigo.com.br \
-    --env DOMAIN=vertigo.noip.me \
+    --env DOMAIN=vertigo.webhop.me \
     --env UPSTREAM=backend:80 \
     --publish 80:80 \
     --publish 443:443 \
